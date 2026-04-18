@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Generador de Excusas Chéveres Pa' No Ir a Clase 😂</title>
+    <title>Generador de Excusas Chéveres Pa' No Ir a Clase</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Genera excusas creativas para faltar al colegio, universidad o camello. Desde sincerin con amor.">
+    <meta name="description" content="Genera excusas épicas para faltar al colegio, universidad o camello. Desde Sincerin con amor.">
     <style>
         body {
             background: #0a0a0a;
@@ -19,7 +19,7 @@
             text-shadow: 0 0 15px #00ff88;
             margin-bottom: 5px;
         }
-     .sub { color: #888; margin-bottom: 30px; }
+       .sub { color: #888; margin-bottom: 30px; }
         button {
             background: linear-gradient(45deg, #ff0055, #ff8800);
             color: white;
@@ -45,12 +45,12 @@
             align-items: center;
             justify-content: center;
         }
-     .share {
+       .share {
             background: #25D366;
             margin-top: 20px;
             box-shadow: 0 5px 20px rgba(37,211,102,0.4);
         }
-     .contador {
+       .contador {
             margin-top: 40px;
             color: #666;
             font-size: 0.9rem;
@@ -63,18 +63,18 @@
     </style>
 </head>
 <body>
-    <h1>Generador de Excusas Chéveres™</h1>
-    <p class="sub">Pa' cuando no quieres ir a clase, al camello o a ver a la suegra 😂</p>
+    <h1>Generador de Excusas Chéveres</h1>
+    <p class="sub">Pa' cuando no quieres ir a clase, al camello o a ver a la suegra</p>
 
     <button onclick="generarExcusa()">DAME UNA EXCUSA ÉPICA</button>
 
-    <div id="excusa">Dale clic al botón compay 👆</div>
+    <div id="excusa">Dale clic al botón compay</div>
 
     <button id="btnShare" class="share" onclick="compartir()" style="display:none;">Compartir por WhatsApp</button>
 
     <p class="contador">Excusas generadas: <span id="num">0</span></p>
 
-    <footer>Hecho desde Sincerin, Bolívar 🔥<br>jose-david-x7.github.io</footer>
+    <footer>Hecho desde Sincerin, Bolívar <br>jose-david-x7.github.io</footer>
 
     <script>
         let excusaActual = "";
@@ -83,14 +83,14 @@
 
         const excusas = [
             "Profe es que se me murió el loro y estoy de luto. Era como mi hijo.",
-            "No pude ir porque soñé que iba y en el sueño me rajo, entonces pa' qué pierdo el tiempo.",
+            "No pude ir porque soñé que iba y en el sueño me rajo, entonces pa qué pierdo el tiempo.",
             "Se me dañó el WiFi del cerebro y no cargo información hoy.",
             "Mi mamá me escondió los zapatos porque dice que estudio mucho y me voy a enfermar.",
             "Es que hoy hay paro de estudiantes en mi casa y yo soy el único estudiante.",
             "Me levanté con alergia a la responsabilidad.",
             "Anoche me picó una araña y creo que tengo poderes, estoy en entrenamiento.",
             "Es que mi perro se comió la tarea... y después se comió las ganas de ir.",
-            "Estoy guardando energía pa' la evaluación final. Esto es estrategia.",
+            "Estoy guardando energía pa la evaluación final. Esto es estrategia.",
             "Me confundí de día, pensé que era domingo. El capitalismo me tiene loco.",
             "No fui porque estaba practicando cómo faltar profesionalmente.",
             "Es que me tocó ir a reclamar la herencia de un tío en Nigeria, era urgente.",
@@ -111,8 +111,8 @@
         }
 
         function compartir() {
-            let texto = *EXCUSA ÉPICA DEL DÍA:* ${excusaActual} 😂🤣\n\nGenera la tuya: https://jose-david-x7.github.io/mi-primera-web/;
-            let url = https://wa.me/?text=${encodeURIComponent(texto)};
+            let texto = "EXCUSA ÉPICA DEL DÍA: " + excusaActual + " 🤣\n\nGenera la tuya: https://jose-david-x7.github.io/mi-primera-web/";
+            let url = "https://wa.me/?text=" + encodeURIComponent(texto);
             window.open(url, '_blank');
         }
     </script>
