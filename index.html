@@ -1,36 +1,120 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mi Primera Web</title>
+    <title>Generador de Excusas Chéveres Pa' No Ir a Clase 😂</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Genera excusas épicas para faltar al colegio, universidad o camello. Desde Malagana con amor.">
     <style>
-        body { 
-            font-family: Arial; 
-            background: #1a1a1a; 
+        body {
+            background: #0a0a0a;
             color: white;
+            font-family: 'Arial Black', sans-serif;
             text-align: center;
-            margin-top: 100px;
+            padding: 20px;
+            min-height: 100vh;
         }
-        h1 { color: #ff0055; }
-        button:hover {
-    background: #ff0055;
-    transform: scale(1.1);
-}
+        h1 {
+            color: #00ff88;
+            font-size: 1.8rem;
+            text-shadow: 0 0 15px #00ff88;
+            margin-bottom: 5px;
+        }
+      .sub { color: #888; margin-bottom: 30px; }
+        button {
+            background: linear-gradient(45deg, #ff0055, #ff8800);
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            font-size: 1.3rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(255,0,85,0.4);
+        }
+        button:hover { transform: scale(1.05); }
+        #excusa {
+            margin: 30px auto;
+            font-size: 1.4rem;
+            padding: 25px;
+            border: 3px dashed #00ff88;
+            border-radius: 15px;
+            background: #1a1a1a;
+            max-width: 500px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+      .share {
+            background: #25D366;
+            margin-top: 20px;
+            box-shadow: 0 5px 20px rgba(37,211,102,0.4);
+        }
+      .contador {
+            margin-top: 40px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        footer {
+            margin-top: 50px;
+            color: #444;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
-    <h1>compay asi es que se empieza 😶‍🌫️</h1>
-    <p>Esta es mi web desde cero. bamos pa' alante.</p>
-    <button onclick="saludar()">Dale clic</button>
-    <img src="https://media.giphy.com/media/3o7TKU8RvQuomFfUUU/giphy.gif" width="200">
+    <h1>Generador de Excusas Chéveres™</h1>
+    <p class="sub">Pa' cuando no quieres ir a clase, al camello o a ver a la suegra 😂</p>
+
+    <button onclick="generarExcusa()">DAME UNA EXCUSA ÉPICA</button>
+
+    <div id="excusa">Dale clic al botón compay 👆</div>
+
+    <button id="btnShare" class="share" onclick="compartir()" style="display:none;">Compartir por WhatsApp</button>
+
+    <p class="contador">Excusas generadas: <span id="num">0</span></p>
+
+    <footer>Hecho desde Malagana, Bolívar con pereza 🔥<br>jose-david-x7.github.io</footer>
 
     <script>
-       
-    let contador = 0;
-    function saludar() {
-        contador = contador + 1;
-        document.querySelector('h1').innerText = `Compay llevas ${contador} clics 🔥`;
-    }
+        let excusaActual = "";
+        let contador = localStorage.getItem('excusasCount') || 0;
+        document.getElementById('num').innerText = contador;
 
+        const excusas = [
+            "Profe es que se me murió el loro y estoy de luto. Era como mi hijo.",
+            "No pude ir porque soñé que iba y en el sueño me rajo, entonces pa' qué pierdo el tiempo.",
+            "Se me dañó el WiFi del cerebro y no cargo información hoy.",
+            "Mi mamá me escondió los zapatos porque dice que estudio mucho y me voy a enfermar.",
+            "Es que hoy hay paro de estudiantes en mi casa y yo soy el único estudiante.",
+            "Me levanté con alergia a la responsabilidad.",
+            "Anoche me picó una araña y creo que tengo poderes, estoy en entrenamiento.",
+            "Es que mi perro se comió la tarea... y después se comió las ganas de ir.",
+            "Estoy guardando energía pa' la evaluación final. Esto es estrategia.",
+            "Me confundí de día, pensé que era domingo. El capitalismo me tiene loco.",
+            "No fui porque estaba practicando cómo faltar profesionalmente.",
+            "Es que me tocó ir a reclamar la herencia de un tío en Nigeria, era urgente.",
+            "Me dio pereza nivel Diomedes un lunes por la mañana.",
+            "Estaba en una reunión muy importante con mi cama y no la podía dejar plantada.",
+            "Es que si iba, elevaba demasiado el promedio del salón y no quería humillar."
+        ];
+
+        function generarExcusa() {
+            let random = Math.floor(Math.random() * excusas.length);
+            excusaActual = excusas[random];
+            document.getElementById('excusa').innerText = excusaActual;
+            document.getElementById('btnShare').style.display = "inline-block";
+
+            contador++;
+            localStorage.setItem('excusasCount', contador);
+            document.getElementById('num').innerText = contador;
+        }
+
+        function compartir() {
+            let texto = *EXCUSA ÉPICA DEL DÍA:* ${excusaActual} 😂🤣\n\nGenera la tuya: https://jose-david-x7.github.io/mi-primera-web/;
+            let url = https://wa.me/?text=${encodeURIComponent(texto)};
+            window.open(url, '_blank');
+        }
     </script>
 </body>
 </html>
