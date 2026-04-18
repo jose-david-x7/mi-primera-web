@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi Primera Web</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            background: #1a1a1a; 
+            color: white;
+            text-align: center;
+            margin-top: 100px;
+        }
+        h1 { color: #ff0055; }
+        button:hover {
+    background: #ff0055;
+    transform: scale(1.1);
+}
+    </style>
+</head>
+<body>
+    <h1>compay asi es que se empieza 😶‍🌫️</h1>
+    <p>Esta es mi web desde cero. bamos pa' alante.</p>
+    <button onclick="saludar()">Dale clic</button>
+    <img src="https://media.giphy.com/media/3o7TKU8RvQuomFfUUU/giphy.gif" width="200">
+
+    <script>
+       
+    let contador = 0;
+    function saludar() {
+        contador = contador + 1;
+        document.querySelector('h1').innerText = `Compay llevas ${contador} clics 🔥`;
+    }
+
+    </script>
+</body>
+</html>
