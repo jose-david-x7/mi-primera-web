@@ -14,7 +14,7 @@
             padding: 20px;
             min-height: 100vh;
         }
-  .container {
+       .container {
             max-width: 900px;
             margin: 0 auto;
             display: flex;
@@ -22,12 +22,12 @@
             flex-wrap: wrap;
             justify-content: center;
         }
-  .main {
+       .main {
             flex: 1;
             min-width: 300px;
             text-align: center;
         }
-  .sidebar {
+       .sidebar {
             width: 280px;
             background: #1a1a1a;
             border: 2px solid #00ff88;
@@ -42,7 +42,7 @@
             text-shadow: 0 0 15px #00ff88;
             margin-bottom: 5px;
         }
- .sub { color: #888; margin-bottom: 20px; }
+       .sub { color: #888; margin-bottom: 20px; }
         button {
             background: linear-gradient(45deg, #ff0055, #ff8800);
             color: white;
@@ -68,23 +68,23 @@
             align-items: center;
             justify-content: center;
         }
- .share {
+       .share {
             background: #25D366;
             margin-top: 20px;
             box-shadow: 0 5px 20px rgba(37,211,102,0.4);
         }
- .contador {
+       .contador {
             margin-top: 40px;
             color: #666;
             font-size: 0.9rem;
         }
-  .sidebar h2 {
+       .sidebar h2 {
             color: #00ff88;
             margin-top: 0;
             font-size: 1.3rem;
             text-align: center;
         }
-  .top-item {
+       .top-item {
             background: #0a0a0a;
             margin: 8px 0;
             padding: 10px;
@@ -93,7 +93,7 @@
             justify-content: space-between;
             font-size: 0.9rem;
         }
-  .top-item span:first-child { color: #ff8800; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+       .top-item span:first-child { color: #ff8800; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         #totalGlobal {
             text-align: center;
             font-size: 1.5rem;
@@ -106,7 +106,7 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             background: rgba(0,0,0,0.9);
-            display: none;
+            display: flex;
             align-items: center;
             justify-content: center;
             z-index: 999;
@@ -140,7 +140,7 @@
             width: 100%;
         }
         @media (max-width: 700px) {
-      .sidebar { width: 100%; order: -1; }
+           .sidebar { width: 100%; order: -1; }
         }
     </style>
 </head>
@@ -177,7 +177,7 @@
         </div>
     </div>
 
-    <footer>Hecho desde Sincerin, Bolívar<br>jose-david-x7.github.io</footer>
+    <footer>Hecho desde Sincerin, Bolívar con pereza<br>jose-david-x7.github.io</footer>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
@@ -223,6 +223,7 @@
             document.getElementById('modalApodo').style.display = 'flex';
         } else {
             document.getElementById('nombreUser').innerText = apodo;
+            document.getElementById('modalApodo').style.display = 'none';
             iniciarTop();
         }
 
@@ -287,9 +288,9 @@
                 const medallas = ['🥇', '🥈', '🥉'];
                 for (let i = 0; i < 3; i++) {
                     if (users[i]) {
-                        html += <div class="top-item"><span>${medallas[i]} ${users[i].nombre}</span><span>${users[i].clics} clics</span></div>;
+                        html += `<div class="top-item"><span>${medallas[i]} ${users[i].nombre}</span><span>${users[i].clics} clics</span></div>`;
                     } else {
-                        html += <div class="top-item"><span>${medallas[i]} Vacío</span><span>0 clics</span></div>;
+                        html += `<div class="top-item"><span>${medallas[i]} Vacío</span><span>0 clics</span></div>`;
                     }
                 }
                 document.getElementById('topLista').innerHTML = html;
