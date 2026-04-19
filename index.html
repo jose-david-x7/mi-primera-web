@@ -5,13 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Genera excusas épicas para faltar al colegio, universidad o camello. Desde Sincerin con amor.">
     <style>
+        * { box-sizing: border-box; }
         body {
             background: #0a0a0a;
             color: white;
             font-family: 'Arial Black', sans-serif;
-            text-align: center;
+            margin: 0;
             padding: 20px;
             min-height: 100vh;
+        }
+     .container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+     .main {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+     .sidebar {
+            width: 280px;
+            background: #1a1a1a;
+            border: 2px solid #00ff88;
+            border-radius: 15px;
+            padding: 20px;
+            height: fit-content;
+            box-shadow: 0 0 20px rgba(0,255,136,0.2);
         }
         h1 {
             color: #00ff88;
@@ -19,7 +42,7 @@
             text-shadow: 0 0 15px #00ff88;
             margin-bottom: 5px;
         }
-       .sub { color: #888; margin-bottom: 30px; }
+    .sub { color: #888; margin-bottom: 30px; }
         button {
             background: linear-gradient(45deg, #ff0055, #ff8800);
             color: white;
@@ -45,34 +68,75 @@
             align-items: center;
             justify-content: center;
         }
-       .share {
+    .share {
             background: #25D366;
             margin-top: 20px;
             box-shadow: 0 5px 20px rgba(37,211,102,0.4);
         }
-       .contador {
+    .contador {
             margin-top: 40px;
             color: #666;
             font-size: 0.9rem;
+        }
+     .sidebar h2 {
+            color: #00ff88;
+            margin-top: 0;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+     .top-item {
+            background: #0a0a0a;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+        }
+     .top-item span:first-child { color: #ff8800; }
+        #totalGlobal {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #00ff88;
+            margin: 15px 0;
+            font-weight: bold;
         }
         footer {
             margin-top: 50px;
             color: #444;
             font-size: 0.8rem;
+            text-align: center;
+            width: 100%;
+        }
+        @media (max-width: 700px) {
+         .sidebar { width: 100%; order: -1; }
         }
     </style>
 </head>
 <body>
-    <h1>Generador de Excusas Chéveres</h1>
-    <p class="sub">Pa' cuando no quieres ir a clase, al camello o a ver a la suegra</p>
+    <div class="container">
+        <div class="main">
+            <h1>Generador de Excusas Chéveres</h1>
+            <p class="sub">Pa' cuando no quieres ir a clase, al camello o a ver a la suegra</p>
 
-    <button onclick="generarExcusa()">DAME UNA EXCUSA ÉPICA</button>
+            <button onclick="generarExcusa()">DAME UNA EXCUSA buena</button>
 
-    <div id="excusa">Dale clic al botón compay</div>
+            <div id="excusa">Dale clic al botón</div>
 
-    <button id="btnShare" class="share" onclick="compartir()" style="display:none;">Compartir por WhatsApp</button>
+            <button id="btnShare" class="share" onclick="compartir()" style="display:none;">Compartir por WhatsApp</button>
 
-    <p class="contador">Excusas generadas: <span id="num">0</span></p>
+            <p class="contador">Tus excusas generadas: <span id="num">0</span></p>
+        </div>
+
+        <div class="sidebar">
+            <h2>🔥 TOP MALAGANA 🔥</h2>
+            <div id="totalGlobal">Cargando...</div>
+            <div class="top-item"><span>🥇 Rey de la Pereza</span><span id="top1">...</span></div>
+            <div class="top-item"><span>🥈 Príncipe del Sueño</span><span id="top2">...</span></div>
+            <div class="top-item"><span>🥉 Duque del Faltón</span><span id="top3">...</span></div>
+            <p style="font-size:0.7rem; color:#555; text-align:center; margin-top:20px;">Total excusas mundiales</p>
+        </div>
+    </div>
 
     <footer>Hecho desde Sincerin, Bolívar <br>jose-david-x7.github.io</footer>
 
@@ -99,6 +163,8 @@
             "Es que si iba, elevaba demasiado el promedio del salón y no quería humillar."
         ];
 
+        actualizarTop();
+
         function generarExcusa() {
             let random = Math.floor(Math.random() * excusas.length);
             excusaActual = excusas[random];
@@ -108,12 +174,38 @@
             contador++;
             localStorage.setItem('excusasCount', contador);
             document.getElementById('num').innerText = contador;
+
+            fetch('https://api.countapi.xyz/hit/jose-david-x7-excusas/total')
+             .then(res => res.json())
+             .then(data => {
+                    document.getElementById('totalGlobal').innerText = data.value.toLocaleString() + ' excusas';
+                    actualizarRanking(data.value);
+                });
         }
 
         function compartir() {
             let texto = "EXCUSA ÉPICA DEL DÍA: " + excusaActual + " 🤣\n\nGenera la tuya: https://jose-david-x7.github.io/mi-primera-web/";
             let url = "https://wa.me/?text=" + encodeURIComponent(texto);
             window.open(url, '_blank');
+        }
+
+        function actualizarTop() {
+            fetch('https://api.countapi.xyz/get/jose-david-x7-excusas/total')
+             .then(res => res.json())
+             .then(data => {
+                    let total = data.value || 0;
+                    document.getElementById('totalGlobal').innerText = total.toLocaleString() + ' excusas';
+                    actualizarRanking(total);
+                })
+             .catch(() => {
+                    document.getElementById('totalGlobal').innerText = '0 excusas';
+                });
+        }
+
+        function actualizarRanking(total) {
+            document.getElementById('top1').innerText = Math.floor(total * 0.4) + ' clics';
+            document.getElementById('top2').innerText = Math.floor(total * 0.3) + ' clics';
+            document.getElementById('top3').innerText = Math.floor(total * 0.2) + ' clics';
         }
     </script>
 </body>
