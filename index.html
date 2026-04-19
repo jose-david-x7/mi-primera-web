@@ -227,8 +227,28 @@
             iniciarTop();
         }
 
-        function guardarApodo() {
-            const input = document.getElementById('inputApodo').value.trim();
+       function guardarApodo() {
+    let input = document.getElementById('inputApodo').value.trim();
+    
+    // Firebase no acepta . # $ [ ] así que los cambiamos por _
+    input = input.replace(/[.#$\[\]]/g, '_');
+    
+    if (input.length < 3) {
+        alert('Mínimo 3 letras compay, no sea flojo');
+        return;
+    }
+    apodo = input;
+    localStorage.setItem('apodoUser', apodo);
+    document.getElementById('nombreUser').innerText = apodo;
+    document.getElementById('modalApodo').style.display = 'none';
+
+    db.ref('users/' + apodo).get().then((snapshot) => {
+        if (!snapshot.exists()) {
+            db.ref('users/' + apodo).set({ clics: 0 });
+        }
+    });
+    iniciarTop();
+}
             if (input.length < 3) {
                 alert('Mínimo 3 letras compay, no sea flojo');
                 return;
