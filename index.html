@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Generador de Excusas Chéveres Pa' No Ir a Clase</title>
+    <title>Generador de Excusas buenas Pa' No Ir a Clase</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Genera excusas épicas para faltar al colegio, universidad o camello. Desde Sincerin con amor.">
     <style>
@@ -14,7 +14,7 @@
             padding: 20px;
             min-height: 100vh;
         }
-     .container {
+   .container {
             max-width: 900px;
             margin: 0 auto;
             display: flex;
@@ -22,12 +22,12 @@
             flex-wrap: wrap;
             justify-content: center;
         }
-     .main {
+   .main {
             flex: 1;
             min-width: 300px;
             text-align: center;
         }
-     .sidebar {
+   .sidebar {
             width: 280px;
             background: #1a1a1a;
             border: 2px solid #00ff88;
@@ -42,7 +42,7 @@
             text-shadow: 0 0 15px #00ff88;
             margin-bottom: 5px;
         }
-    .sub { color: #888; margin-bottom: 30px; }
+  .sub { color: #888; margin-bottom: 20px; }
         button {
             background: linear-gradient(45deg, #ff0055, #ff8800);
             color: white;
@@ -68,23 +68,23 @@
             align-items: center;
             justify-content: center;
         }
-    .share {
+  .share {
             background: #25D366;
             margin-top: 20px;
             box-shadow: 0 5px 20px rgba(37,211,102,0.4);
         }
-    .contador {
+  .contador {
             margin-top: 40px;
             color: #666;
             font-size: 0.9rem;
         }
-     .sidebar h2 {
+   .sidebar h2 {
             color: #00ff88;
             margin-top: 0;
             font-size: 1.3rem;
             text-align: center;
         }
-     .top-item {
+   .top-item {
             background: #0a0a0a;
             margin: 8px 0;
             padding: 10px;
@@ -93,13 +93,44 @@
             justify-content: space-between;
             font-size: 0.9rem;
         }
-     .top-item span:first-child { color: #ff8800; }
+   .top-item span:first-child { color: #ff8800; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         #totalGlobal {
             text-align: center;
             font-size: 1.5rem;
             color: #00ff88;
             margin: 15px 0;
             font-weight: bold;
+        }
+        #modalApodo {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+        #modalApodo.box {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #00ff88;
+            text-align: center;
+        }
+        #modalApodo input {
+            padding: 12px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            border: 2px solid #00ff88;
+            background: #0a0a0a;
+            color: white;
+            margin: 15px 0;
+            width: 80%;
+        }
+        #modalApodo button {
+            padding: 12px 25px;
+            font-size: 1rem;
         }
         footer {
             margin-top: 50px;
@@ -109,17 +140,27 @@
             width: 100%;
         }
         @media (max-width: 700px) {
-         .sidebar { width: 100%; order: -1; }
+       .sidebar { width: 100%; order: -1; }
         }
     </style>
 </head>
 <body>
+    <div id="modalApodo">
+        <div class="box">
+            <h2 style="color:#00ff88; margin:0;">Elige tu apodo de guerrero</h2>
+            <p style="color:#888; font-size:0.9rem;">Pa' salir en el TOP tienes que ponerte un nombre</p>
+            <input type="text" id="inputApodo" placeholder="Ej: El Rey de la Pereza" maxlength="20">
+            <br>
+            <button onclick="guardarApodo()">ENTRAR AL JUEGO</button>
+        </div>
+    </div>
+
     <div class="container">
         <div class="main">
             <h1>Generador de Excusas Chéveres</h1>
-            <p class="sub">Pa' cuando no quieres ir a clase, al camello o a ver a la suegra</p>
+            <p class="sub">Bienvenido <span id="nombreUser" style="color:#00ff88;"></span></p>
 
-            <button onclick="generarExcusa()">DAME UNA EXCUSA buena</button>
+            <button onclick="generarExcusa()">DAME UNA EXCUSA ÉPICA</button>
 
             <div id="excusa">Dale clic al botón</div>
 
@@ -131,18 +172,33 @@
         <div class="sidebar">
             <h2>🔥 TOP MUNDIAL 🔥</h2>
             <div id="totalGlobal">Cargando...</div>
-            <div class="top-item"><span>🥇 Rey de la Pereza</span><span id="top1">...</span></div>
-            <div class="top-item"><span>🥈 Príncipe del Sueño</span><span id="top2">...</span></div>
-            <div class="top-item"><span>🥉 Duque del Faltón</span><span id="top3">...</span></div>
-            <p style="font-size:0.7rem; color:#555; text-align:center; margin-top:20px;">Total excusas mundiales</p>
+            <div id="topLista"></div>
+            <p style="font-size:0.7rem; color:#555; text-align:center; margin-top:20px;">Se actualiza en tiempo real</p>
         </div>
     </div>
 
-    <footer>Hecho desde Sincerin, Bolívar <br>jose-david-x7.github.io</footer>
+    <footer>Hecho desde Sincerin, Bolívar<br>jose-david-x7.github.io</footer>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <script>
+        const firebaseConfig = {
+          apiKey: "AIzaSyBYOTEIezzRq_1VjOi7L61Ndf611UWU4is",
+          authDomain: "frases-excusas-epicas.firebaseapp.com",
+          databaseURL: "https://frases-excusas-epicas-default-rtdb.firebaseio.com",
+          projectId: "frases-excusas-epicas",
+          storageBucket: "frases-excusas-epicas.firebasestorage.app",
+          messagingSenderId: "529585194893",
+          appId: "1:529585194893:web:d9e189224aa7bde0e55fc4"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
         let excusaActual = "";
-        let contador = localStorage.getItem('excusasCount') || 0;
+        let apodo = localStorage.getItem('apodoUser');
+        let contador = parseInt(localStorage.getItem('excusasCount')) || 0;
         document.getElementById('num').innerText = contador;
 
         const excusas = [
@@ -163,9 +219,38 @@
             "Es que si iba, elevaba demasiado el promedio del salón y no quería humillar."
         ];
 
-        actualizarTop();
+        if (!apodo) {
+            document.getElementById('modalApodo').style.display = 'flex';
+        } else {
+            document.getElementById('nombreUser').innerText = apodo;
+            iniciarTop();
+        }
+
+        function guardarApodo() {
+            const input = document.getElementById('inputApodo').value.trim();
+            if (input.length < 3) {
+                alert('Mínimo 3 letras compay, no sea flojo');
+                return;
+            }
+            apodo = input;
+            localStorage.setItem('apodoUser', apodo);
+            document.getElementById('nombreUser').innerText = apodo;
+            document.getElementById('modalApodo').style.display = 'none';
+
+            db.ref('users/' + apodo).get().then((snapshot) => {
+                if (!snapshot.exists()) {
+                    db.ref('users/' + apodo).set({ clics: 0 });
+                }
+            });
+            iniciarTop();
+        }
 
         function generarExcusa() {
+            if (!apodo) {
+                document.getElementById('modalApodo').style.display = 'flex';
+                return;
+            }
+
             let random = Math.floor(Math.random() * excusas.length);
             excusaActual = excusas[random];
             document.getElementById('excusa').innerText = excusaActual;
@@ -175,12 +260,8 @@
             localStorage.setItem('excusasCount', contador);
             document.getElementById('num').innerText = contador;
 
-            fetch('https://api.countapi.xyz/hit/jose-david-x7-excusas/total')
-             .then(res => res.json())
-             .then(data => {
-                    document.getElementById('totalGlobal').innerText = data.value.toLocaleString() + ' excusas';
-                    actualizarRanking(data.value);
-                });
+            db.ref('total').transaction((currentTotal) => (currentTotal || 0) + 1);
+            db.ref('users/' + apodo + '/clics').transaction((currentClics) => (currentClics || 0) + 1);
         }
 
         function compartir() {
@@ -189,23 +270,30 @@
             window.open(url, '_blank');
         }
 
-        function actualizarTop() {
-            fetch('https://api.countapi.xyz/get/jose-david-x7-excusas/total')
-             .then(res => res.json())
-             .then(data => {
-                    let total = data.value || 0;
-                    document.getElementById('totalGlobal').innerText = total.toLocaleString() + ' excusas';
-                    actualizarRanking(total);
-                })
-             .catch(() => {
-                    document.getElementById('totalGlobal').innerText = '0 excusas';
-                });
-        }
+        function iniciarTop() {
+            db.ref('total').on('value', (snapshot) => {
+                const total = snapshot.val() || 0;
+                document.getElementById('totalGlobal').innerText = total.toLocaleString() + ' excusas';
+            });
 
-        function actualizarRanking(total) {
-            document.getElementById('top1').innerText = Math.floor(total * 0.4) + ' clics';
-            document.getElementById('top2').innerText = Math.floor(total * 0.3) + ' clics';
-            document.getElementById('top3').innerText = Math.floor(total * 0.2) + ' clics';
+            db.ref('users').orderByChild('clics').limitToLast(3).on('value', (snapshot) => {
+                const users = [];
+                snapshot.forEach((child) => {
+                    users.push({ nombre: child.key, clics: child.val().clics });
+                });
+                users.reverse();
+
+                let html = '';
+                const medallas = ['🥇', '🥈', '🥉'];
+                for (let i = 0; i < 3; i++) {
+                    if (users[i]) {
+                        html += <div class="top-item"><span>${medallas[i]} ${users[i].nombre}</span><span>${users[i].clics} clics</span></div>;
+                    } else {
+                        html += <div class="top-item"><span>${medallas[i]} Vacío</span><span>0 clics</span></div>;
+                    }
+                }
+                document.getElementById('topLista').innerHTML = html;
+            });
         }
     </script>
 </body>
