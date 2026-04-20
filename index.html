@@ -3,145 +3,29 @@
 <head>
     <title>Generador de Excusas Chéveres Pa' No Ir a Clase</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Genera excusas épicas para faltar al colegio, universidad o camello. Desde Sincerin con amor.">
     <style>
         * { box-sizing: border-box; }
-        body {
-            background: #0a0a0a;
-            color: white;
-            font-family: 'Arial Black', sans-serif;
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .main {
-            flex: 1;
-            min-width: 300px;
-            text-align: center;
-        }
-        .sidebar {
-            width: 280px;
-            background: #1a1a1a;
-            border: 2px solid #00ff88;
-            border-radius: 15px;
-            padding: 20px;
-            height: fit-content;
-            box-shadow: 0 0 20px rgba(0,255,136,0.2);
-        }
-        h1 {
-            color: #00ff88;
-            font-size: 1.8rem;
-            text-shadow: 0 0 15px #00ff88;
-            margin-bottom: 5px;
-        }
+        body { background: #0a0a0a; color: white; font-family: 'Arial Black', sans-serif; margin: 0; padding: 20px; min-height: 100vh; }
+        .container { max-width: 900px; margin: 0 auto; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+        .main { flex: 1; min-width: 300px; text-align: center; }
+        .sidebar { width: 280px; background: #1a1a1a; border: 2px solid #00ff88; border-radius: 15px; padding: 20px; height: fit-content; box-shadow: 0 0 20px rgba(0,255,136,0.2); }
+        h1 { color: #00ff88; font-size: 1.8rem; text-shadow: 0 0 15px #00ff88; margin-bottom: 5px; }
         .sub { color: #888; margin-bottom: 20px; }
-        button {
-            background: linear-gradient(45deg, #ff0055, #ff8800);
-            color: white;
-            border: none;
-            padding: 18px 35px;
-            font-size: 1.3rem;
-            border-radius: 15px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 5px 20px rgba(255,0,85,0.4);
-        }
+        button { background: linear-gradient(45deg, #ff0055, #ff8800); color: white; border: none; padding: 18px 35px; font-size: 1.3rem; border-radius: 15px; cursor: pointer; font-weight: bold; box-shadow: 0 5px 20px rgba(255,0,85,0.4); }
         button:hover { transform: scale(1.05); }
-        #excusa {
-            margin: 30px auto;
-            font-size: 1.4rem;
-            padding: 25px;
-            border: 3px dashed #00ff88;
-            border-radius: 15px;
-            background: #1a1a1a;
-            max-width: 500px;
-            min-height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .share {
-            background: #25D366;
-            margin-top: 20px;
-            box-shadow: 0 5px 20px rgba(37,211,102,0.4);
-        }
-        .contador {
-            margin-top: 40px;
-            color: #666;
-            font-size: 0.9rem;
-        }
-        .sidebar h2 {
-            color: #00ff88;
-            margin-top: 0;
-            font-size: 1.3rem;
-            text-align: center;
-        }
-        .top-item {
-            background: #0a0a0a;
-            margin: 8px 0;
-            padding: 10px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-        }
+        #excusa { margin: 30px auto; font-size: 1.4rem; padding: 25px; border: 3px dashed #00ff88; border-radius: 15px; background: #1a1a1a; max-width: 500px; min-height: 80px; display: flex; align-items: center; justify-content: center; }
+        .share { background: #25D366; margin-top: 20px; box-shadow: 0 5px 20px rgba(37,211,102,0.4); }
+        .contador { margin-top: 40px; color: #666; font-size: 0.9rem; }
+        .sidebar h2 { color: #00ff88; margin-top: 0; font-size: 1.3rem; text-align: center; }
+        .top-item { background: #0a0a0a; margin: 8px 0; padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; font-size: 0.9rem; }
         .top-item span:first-child { color: #ff8800; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        #totalGlobal {
-            text-align: center;
-            font-size: 1.5rem;
-            color: #00ff88;
-            margin: 15px 0;
-            font-weight: bold;
-        }
-        #modalApodo {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 999;
-        }
-        #modalApodo .box {
-            background: #1a1a1a;
-            padding: 30px;
-            border-radius: 15px;
-            border: 2px solid #00ff88;
-            text-align: center;
-        }
-        #modalApodo input {
-            padding: 12px;
-            font-size: 1.1rem;
-            border-radius: 8px;
-            border: 2px solid #00ff88;
-            background: #0a0a0a;
-            color: white;
-            margin: 15px 0;
-            width: 80%;
-        }
-        #modalApodo button {
-            padding: 12px 25px;
-            font-size: 1rem;
-        }
-        footer {
-            margin-top: 50px;
-            color: #444;
-            font-size: 0.8rem;
-            text-align: center;
-            width: 100%;
-        }
-        @media (max-width: 700px) {
-            .sidebar { width: 100%; order: -1; }
-        }
+        #totalGlobal { text-align: center; font-size: 1.5rem; color: #00ff88; margin: 15px 0; font-weight: bold; }
+        #modalApodo { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 999; }
+        #modalApodo .box { background: #1a1a1a; padding: 30px; border-radius: 15px; border: 2px solid #00ff88; text-align: center; }
+        #modalApodo input { padding: 12px; font-size: 1.1rem; border-radius: 8px; border: 2px solid #00ff88; background: #0a0a0a; color: white; margin: 15px 0; width: 80%; }
+        #modalApodo button { padding: 12px 25px; font-size: 1rem; }
+        footer { margin-top: 50px; color: #444; font-size: 0.8rem; text-align: center; width: 100%; }
+        @media (max-width: 700px) { .sidebar { width: 100%; order: -1; } }
     </style>
 </head>
 <body>
@@ -159,16 +43,11 @@
         <div class="main">
             <h1>Generador de Excusas Chéveres</h1>
             <p class="sub">Bienvenido <span id="nombreUser" style="color:#00ff88;"></span></p>
-
             <button onclick="generarExcusa()">DAME UNA EXCUSA ÉPICA</button>
-
-            <div id="excusa">Dale clic al botón</div>
-
+            <div id="excusa">Dale clic al botón compay</div>
             <button id="btnShare" class="share" onclick="compartir()" style="display:none;">Compartir por WhatsApp</button>
-
             <p class="contador">Tus excusas generadas: <span id="num">0</span></p>
         </div>
-
         <div class="sidebar">
             <h2>🔥 TOP MUNDIAL 🔥</h2>
             <div id="totalGlobal">Cargando...</div>
@@ -230,17 +109,14 @@
         function guardarApodo() {
             let input = document.getElementById('inputApodo').value.trim();
             input = input.replace(/[.#$\[\]]/g, '_');
-            
             if (input.length < 3) {
                 alert('Mínimo 3 letras compay, no sea flojo');
                 return;
             }
-            
             apodo = input;
             localStorage.setItem('apodoUser', apodo);
             document.getElementById('nombreUser').innerText = apodo;
             document.getElementById('modalApodo').style.display = 'none';
-
             db.ref('users/' + apodo).get().then((snapshot) => {
                 if (!snapshot.exists()) {
                     db.ref('users/' + apodo).set({ clics: 0 });
@@ -254,16 +130,13 @@
                 document.getElementById('modalApodo').style.display = 'flex';
                 return;
             }
-
             let random = Math.floor(Math.random() * excusas.length);
             excusaActual = excusas[random];
             document.getElementById('excusa').innerText = excusaActual;
             document.getElementById('btnShare').style.display = "inline-block";
-
             contador++;
             localStorage.setItem('excusasCount', contador);
             document.getElementById('num').innerText = contador;
-
             db.ref('total').transaction((currentTotal) => (currentTotal || 0) + 1);
             db.ref('users/' + apodo + '/clics').transaction((currentClics) => (currentClics || 0) + 1);
         }
@@ -279,21 +152,19 @@
                 const total = snapshot.val() || 0;
                 document.getElementById('totalGlobal').innerText = total.toLocaleString() + ' excusas';
             });
-
             db.ref('users').orderByChild('clics').limitToLast(3).on('value', (snapshot) => {
                 const users = [];
                 snapshot.forEach((child) => {
                     users.push({ nombre: child.key, clics: child.val().clics });
                 });
                 users.reverse();
-
                 let html = '';
                 const medallas = ['🥇', '🥈', '🥉'];
                 for (let i = 0; i < 3; i++) {
                     if (users[i]) {
-                        html += <div class="top-item"><span>${medallas[i]} ${users[i].nombre}</span><span>${users[i].clics} clics</span></div>;
+                        html += `<div class="top-item"><span>${medallas[i]} ${users[i].nombre}</span><span>${users[i].clics} clics</span></div>`;
                     } else {
-                        html += <div class="top-item"><span>${medallas[i]} Vacío</span><span>0 clics</span></div>;
+                        html += `<div class="top-item"><span>${medallas[i]} Vacío</span><span>0 clics</span></div>`;
                     }
                 }
                 document.getElementById('topLista').innerHTML = html;
